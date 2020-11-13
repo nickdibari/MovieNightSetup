@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import sys
 
 HELP = '''
@@ -63,6 +64,9 @@ movie_file = args.movie_file
 if not os.path.exists(movie_file):
     print(f'ERROR: File {movie_file} not found!')
     sys.exit(1)
+
+# Escape filename to ensure string is properly passed to ffmpeg
+movie_file = shlex.quote(movie_file)
 
 start_time = args.start_time
 
