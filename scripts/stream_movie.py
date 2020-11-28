@@ -50,8 +50,8 @@ try:
     with open(config_file, 'r') as config_fp:
         config = json.load(config_fp)
 
-        HOST = config['Host']
-        STREAM_KEY = config['Stream_Key']
+        host = config['Host']
+        stream_key = config['Stream_Key']
 except IOError:
     print(f'ERROR: No file {config_file} found!')
     sys.exit(1)
@@ -74,8 +74,8 @@ if not re.match(r'[0-9]{2}:[0-9]{2}:[0-9]', start_time):
     print(f'ERROR: Invalid start_timestamp {start_time}. Please enter a value in the form of HH:MM:SS')
     sys.exit(1)
 
-rtmp_server = f'rtmp://{HOST}/live/{STREAM_KEY}'
+rtmp_server = f'rtmp://{host}/live/{stream_key}'
 
 command = f'/usr/bin/ffmpeg -ss {start_time} -re -i {movie_file} -c:v copy -b:v 301k -c:a aac -f flv {rtmp_server}'
 
-os.system(command)
+sys.exit(os.system(command))
